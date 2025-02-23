@@ -14,7 +14,7 @@ A simple yet engaging **Rock-Paper-Scissors** game built with **Flutter** and **
 ---
 
 ## Screenshots 📸
-![Game Screenshot 1](images/screenshot1.png)  
+![Game Screenshot 1](images/Simulator Screenshot - iPhone 16 Pro - 2025-02-14 at 09.18.43.png)  
 *Caption: Main game screen with Rock, Paper, and Scissors buttons.*
 
 ![Game Screenshot 2](images/screenshot2.png)  
