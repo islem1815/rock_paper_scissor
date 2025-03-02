@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'dart:math';
 
 const Color backgroundColor = Color.fromRGBO(34, 2, 105, 1);
-const List<String> choices = ['rock', 'paper', 'scissors'];
+const List<String> choices = ['paper', 'rock', 'scissor'];
 
 enum GameResult { win, lose, draw }
 
@@ -34,14 +35,14 @@ class _GamePageState extends State<GamePage> {
 
   // false => the user lost , true => user won
   GameResult checkWinner(String user, String computer) {
-    if ((user == 'rock' && computer == "scissors") ||
+    if ((user == 'rock' && computer == "scissor") ||
         (user == 'paper' && computer == 'rock') ||
-        (user == 'scissors' && computer == 'paper')) {
+        (user == 'scissor' && computer == 'paper')) {
       ++userScore;
       return GameResult.win;
-    } else if ((computer == 'rock' && user == "scissors") ||
+    } else if ((computer == 'rock' && user == "scissor") ||
         (computer == 'paper' && user == 'rock') ||
-        (computer == 'scissors' && user == 'paper')) {
+        (computer == 'scissor' && user == 'paper')) {
       ++computerScore;
       return GameResult.lose;
     } else {
@@ -55,6 +56,22 @@ class _GamePageState extends State<GamePage> {
       computerChoice = computerChoiceGenerator();
       gameResult = checkWinner(userChoice, computerChoice);
     });
+  }
+
+  void playSound(int index) {
+    final player = AudioPlayer();
+    player.play(AssetSource('sound$index.wav'));
+  }
+
+  Expanded buildKey(int player_choiceI, String player_choiceS) {
+    return Expanded(
+      child: TextButton(
+          onPressed: () {
+            playSound(player_choiceI);
+            _playGame(choices[player_choiceI]);
+          },
+          child: Image.asset('images/$player_choiceS.png')),
+    );
   }
 
   @override
@@ -73,26 +90,11 @@ class _GamePageState extends State<GamePage> {
         children: [
           SizedBox(height: 30),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Expanded(
-                child: TextButton(
-                    onPressed: () {
-                      _playGame(choices[0]);
-                    },
-                    child: Image.asset('images/rock.png')),
-              ),
-              Expanded(
-                  child: TextButton(
-                      onPressed: () {
-                        _playGame(choices[1]);
-                      },
-                      child: Image.asset('images/paper.png'))),
-              Expanded(
-                  child: TextButton(
-                      onPressed: () {
-                        _playGame(choices[2]);
-                      },
-                      child: Image.asset('images/scissor.png'))),
+              buildKey(0, 'paper'),
+              buildKey(1, 'rock'),
+              buildKey(2, 'scissor'),
             ],
           ),
           Column(
